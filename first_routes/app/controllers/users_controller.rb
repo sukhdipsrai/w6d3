@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     end
 
     def create 
-        user = User.new(params.require(:user).permit(:id, :name, :email))
+        user = User.new(pass_params)
         #replace the `user_attributes_here` with the actual attribute keys
         if user.save
             render json: user
@@ -15,5 +15,17 @@ class UsersController < ApplicationController
 
     def show 
         render json: params
+    end
+
+    def destroy
+        # figure syntax
+        user = User.find_by(id: :id)
+        user.destroy
+        render json: user
+    end
+
+    private
+    def pass_params
+        params.require(:user).permit(:username) 
     end
 end
